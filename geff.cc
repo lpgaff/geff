@@ -91,13 +91,6 @@ int main( int argc, char* argv[] ) {
 			
 		}
 		
-		else if( optresult.count("e") > 3 ) {
-			
-			cerr << "I can only handle a maxiumum of 3 sources right now, sorry\n";
-			return 1;
-			
-		}
-		
 		else if( optresult.count("e") < optresult.count("n") ) {
 			
 			cerr << "Too many normalisation files\n";
