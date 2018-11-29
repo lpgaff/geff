@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:geff.cc">
+   </FileRef>
+   <FileRef
+      location = "container:/Users/lpgaff/cernbox/Research/BaCoulex/Analysis/calibrations/fiteff/FitEff.cc">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/lpgaff/cernbox/Research/BaCoulex/Analysis/calibrations/fiteff/FitEff.hh">
+   </FileRef>
+   <FileRef
+      location = "group:GlobalFitter.cc">
+   </FileRef>
+   <FileRef
+      location = "group:GlobalFitter.hh">
+   </FileRef>
+   <FileRef
+      location = "group:Makefile">
+   </FileRef>
+   <FileRef
+      location = "group:cxxopts.hh">
+   </FileRef>
+   <FileRef
+      location = "group:convert.hh">
+   </FileRef>
+   <FileRef
+      location = "group:RootLinkDef.h">
+   </FileRef>
+</Workspace>
