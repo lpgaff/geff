@@ -1,7 +1,11 @@
 geff
+.DS_Store
+*xcworkspace
+*txt
+*pdf
 bin/*
 lib/*
-*dYSM
+*dSYM
 *~
 *.o
 *.a
