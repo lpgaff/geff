@@ -68,6 +68,7 @@ int main( int argc, char* argv[] ) {
 	string outputfile = "efficiency.pdf";
 	int limits[2] = { 0, 4500 };
 	stringstream ss;
+	string tmp1, tmp2;
 	
 	// Options parser
 	try {
@@ -138,13 +139,25 @@ int main( int argc, char* argv[] ) {
 			
 			else {
 				
-				ss << range.substr( 0, range.find_first_of(":") );
-				ss >> limits[0];
-				ss.clear();
-				ss.str("");
-				ss << range.substr( range.find_first_of(":")+1, std::string::npos );
-				ss >> limits[1];
-
+				tmp1 = range.substr( 0, range.find_first_of(":") );
+				tmp2 = range.substr( range.find_first_of(":")+1, std::string::npos );
+				
+				if( tmp1.size() > 0 ) {
+					
+					ss << tmp1;
+					ss >> limits[0];
+					
+				}
+				
+				if( tmp2.size() > 0 ) {
+					
+					ss.clear();
+					ss.str("");
+					ss << tmp2;
+					ss >> limits[1];
+					
+				}
+				
 			}
 		
 		}
