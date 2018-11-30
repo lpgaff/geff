@@ -5,6 +5,7 @@ geff
 *pdf
 bin/*
 lib/*
+test*
 *dSYM
 *~
 *.o

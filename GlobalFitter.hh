@@ -24,11 +24,11 @@ class GlobalFitter {
 	
 public:
 	
-	GlobalFitter( double _E0 = 350., int _Estart = 1, int _Eend = 4500 ){
+	GlobalFitter( double _E0 = 350., int Es = 1, int Ee = 4500 ){
 		
 		E0 = _E0;
-		Estart = _Estart;
-		Eend = _Eend;
+		Estart = Es;
+		Eend = Ee;
 		
 	};
 	virtual ~GlobalFitter(){;};

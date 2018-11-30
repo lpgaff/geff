@@ -19,6 +19,12 @@
 #include "GlobalFitter.hh"
 #endif
 
+#include <sstream>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
 void PrintUsage( char* progname ) {
 	
 	cout << "\nUsage: \n" << progname;
@@ -60,6 +66,8 @@ int main( int argc, char* argv[] ) {
 	
 	// Some variables
 	string outputfile = "efficiency.pdf";
+	int limits[2] = { 0, 4500 };
+	stringstream ss;
 	
 	// Options parser
 	try {
@@ -74,6 +82,8 @@ int main( int argc, char* argv[] ) {
 		 cxxopts::value<std::vector<std::string>>(), "<normX.dat>" )
 		( "o,out", "output filename, filetype taken from extension (pdf, png, svg, eps, root, C, etc)",
 		 cxxopts::value<std::string>(), "<efficiency.pdf>" )
+		( "r,range", "fit range in the format <min>:<max> (keV)",
+		 cxxopts::value<std::string>(), "1:4500" )
 		( "h,help", "Print this help" )
 		;
 		
@@ -114,11 +124,34 @@ int main( int argc, char* argv[] ) {
 		// Check for output filename (use default if not)
 		if( optresult.count("o") )
 			outputfile = optresult["o"].as<std::string>();
-
 		
+		// Check for range (use default if not)
+		if( optresult.count("r") ) {
+		
+			string range = optresult["r"].as<std::string>();
+			if( range.find(":") == std::string::npos ) {
+				
+				cerr << "Range not in correct format" << endl;
+				return 1;
+				
+			}
+			
+			else {
+				
+				ss << range.substr( 0, range.find_first_of(":") );
+				ss >> limits[0];
+				ss.clear();
+				ss.str("");
+				ss << range.substr( range.find_first_of(":")+1, std::string::npos );
+				ss >> limits[1];
+
+			}
+		
+		}
+
 		// If we get this far, create the FitEff and GlobalFitter instances
-		GlobalFitter gf( 350., 1, 4500 );
-		FitEff fe( gf );
+		GlobalFitter gf( 350., limits[0], limits[1] );
+		FitEff fe( gf, limits[0], limits[1] );
 
 		// Initialise with the number of sources
 		fe.SetVariables( optresult.count("e") );

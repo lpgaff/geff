@@ -38,7 +38,7 @@ class FitEff {
 public:
 	
 	// Initialisation functions
-	FitEff( GlobalFitter gf );
+	FitEff( GlobalFitter gf, int Es, int Ee );
 	~FitEff();
 	
 	// Setup functions
@@ -93,6 +93,10 @@ private:
 	
 	// Efficiency curves
 	TF1 *fEff, *fErr;
+
+	// Default variables
+	int Estart;
+	int Eend;
 
 	// Efficiency parameters
 	vector<double> effpar;

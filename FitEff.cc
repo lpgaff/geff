@@ -10,10 +10,14 @@
 #include "FitEff.hh"
 #endif
 
-FitEff::FitEff( GlobalFitter gf ) {
+FitEff::FitEff( GlobalFitter gf, int Es, int Ee ) {
 	
 	// Assign fitter
 	globalChi2 = &gf;
+	
+	// Set limits
+	Estart = Es;
+	Eend = Ee;
 	
 	// Check number of parameters in efficiency curve
 	if( npoly > 10 ){
@@ -220,39 +224,6 @@ void FitEff::DoFit() {
 
 void FitEff::DrawResults( string outputfile ) {
 	
-	// Graphs for the data
-	gData.resize( nsources );
-	for( unsigned int i = 0; i < nsources; i++ ) {
-
-		gData[i] = new TGraphErrors( x[i].size() );
-	
-		gData[i]->SetLineColor(i+1);
-		gData[i]->SetMarkerColor(i+1);
-		gData[i]->SetMarkerStyle(24+i*2);
-		gData[i]->SetMarkerSize(2);
-		gData[i]->SetLineWidth(2);
-
-		title = "source #" + convertInt(i+1);
-		leg->AddEntry( gData[i], title.c_str(), "lep" );
-
-		mg->Add( gData[i], "P" );
-
-	}
-	
-	// Fill data points in graphs
-	double scale;
-	for( unsigned  int i = 0; i < nsources; i++ ) {
-		
-		for ( unsigned int j = 0; j < x[i].size(); j++ ) {
-			
-			scale = fitres.Value(npoly+i);
-			gData[i]->SetPoint( j, x[i][j], y[i][j] * scale );
-			gData[i]->SetPointError( j, xerr[i][j], yerr[i][j] * scale );
-			
-		}
-		
-	}
-	
 	// Graphs for effiency function
 	gFinal = new TGraph( fEff->GetXmax() - fEff->GetXmin() );
 	gLow = new TGraph( fEff->GetXmax() - fEff->GetXmin() );
@@ -275,6 +246,40 @@ void FitEff::DrawResults( string outputfile ) {
 
 	}
 	
+	// Graphs for the data
+	gData.resize( nsources );
+	for( unsigned int i = 0; i < nsources; i++ ) {
+		
+		gData[i] = new TGraphErrors( x[i].size() );
+		
+		gData[i]->SetLineColor(i+1);
+		gData[i]->SetMarkerColor(i+1);
+		gData[i]->SetMarkerStyle(24+i*2);
+		gData[i]->SetMarkerSize(2);
+		gData[i]->SetLineWidth(2);
+		
+		title = "source #" + convertInt(i+1);
+		leg->AddEntry( gData[i], title.c_str(), "lep" );
+		
+		mg->Add( gData[i], "P" );
+		
+	}
+
+	// Fill data points in graphs
+	double scale;
+	for( unsigned  int i = 0; i < nsources; i++ ) {
+		
+		for ( unsigned int j = 0; j < x[i].size(); j++ ) {
+			
+			scale = fitres.Value(npoly+i);
+			gData[i]->SetPoint( j, x[i][j], y[i][j] * scale );
+			gData[i]->SetPointError( j, xerr[i][j], yerr[i][j] * scale );
+			
+		}
+		
+	}
+	
+	// Some tidying up
 	gFinal->SetLineColor(nsources+1);
 	gFinal->SetLineWidth(2);
 	gLow->SetLineStyle(10);
@@ -292,15 +297,16 @@ void FitEff::DrawResults( string outputfile ) {
 	mg->Add(gFinal,"C");
 	mg->Draw("A");
 	//c1->SetLogx();
-	mg->GetXaxis()->SetRangeUser( 1, 1500 );
+	mg->GetXaxis()->SetRangeUser( Estart, Eend );
 	//c1->SetLogy();
-	//mg->GetYaxis()->SetRangeUser( gFinal->Eval(20) / 2.0, gData[0]->GetMaximum() * 2.0 );
+	mg->GetYaxis()->SetRangeUser( gFinal->Eval(Estart) * 0.9, gFinal->GetMaximum() * 1.1 );
 	//mg->GetYaxis()->UnZoom();
 	c1->SetGridy();
 	c1->SetGridx();
 
 	leg->Draw("same");
 
+	// Labels etc
 	mg->GetXaxis()->SetTitle("Energy (keV)");
 	mg->GetYaxis()->SetTitle("Efficiency (%)");
 	mg->GetXaxis()->SetTickLength(0.015);
