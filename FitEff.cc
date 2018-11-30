@@ -218,7 +218,7 @@ void FitEff::DoFit() {
 	
 }
 
-void FitEff::DrawResults() {
+void FitEff::DrawResults( string outputfile ) {
 	
 	// Graphs for the data
 	gData.resize( nsources );
@@ -311,7 +311,7 @@ void FitEff::DrawResults() {
 	
 	c1->Update();
 
-	c1->SaveAs("efficiency.pdf");
+	c1->SaveAs( outputfile.c_str() );
 	
 	return;
 	

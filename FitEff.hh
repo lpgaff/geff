@@ -66,7 +66,7 @@ public:
 	void DoFit();
 	
 	// Draw things
-	void DrawResults();
+	void DrawResults( string outputfile );
 
 private:
 	

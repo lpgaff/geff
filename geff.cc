@@ -58,6 +58,9 @@ int main( int argc, char* argv[] ) {
 		
 	}
 	
+	// Some variables
+	string outputfile = "efficiency.pdf";
+	
 	// Options parser
 	try {
 		
@@ -69,6 +72,8 @@ int main( int argc, char* argv[] ) {
 		 cxxopts::value<std::vector<std::string>>(), "<effX.dat>" )
 		( "n,norm", "normalisation file for source #X (repeat for each source)",
 		 cxxopts::value<std::vector<std::string>>(), "<normX.dat>" )
+		( "o,out", "output filename, filetype taken from extension (pdf, png, svg, eps, root, C, etc)",
+		 cxxopts::value<std::string>(), "<efficiency.pdf>" )
 		( "h,help", "Print this help" )
 		;
 		
@@ -106,6 +111,11 @@ int main( int argc, char* argv[] ) {
 			
 		}
 		
+		// Check for output filename (use default if not)
+		if( optresult.count("o") )
+			outputfile = optresult["o"].as<std::string>();
+
+		
 		// If we get this far, create the FitEff and GlobalFitter instances
 		GlobalFitter gf( 350., 1, 4500 );
 		FitEff fe( gf );
@@ -129,7 +139,7 @@ int main( int argc, char* argv[] ) {
 		fe.DoFit();
 		
 		// Draw the results
-		fe.DrawResults();
+		fe.DrawResults( outputfile );
 		
 	}
 	
