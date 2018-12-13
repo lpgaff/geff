@@ -51,6 +51,6 @@ DEPENDENCIES = GlobalFitter.hh \
 	$(CPP) $(CFLAGS) $(INCLUDES) -c $<
 
 %_dict.cc: $(DEPENDENCIES)
-	rm -f $@ *$(DICTEXT)
+	rm -f $@ *_dict$(DICTEXT)
 	$(ROOTDICT) -f $@ -c $(INCLUDES) $(DEPENDENCIES)
 	cp $*_dict$(DICTEXT) $(LIBDIR)/
