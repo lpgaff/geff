@@ -66,7 +66,7 @@ int main( int argc, char* argv[] ) {
 	
 	// Some variables
 	string outputfile = "efficiency.pdf";
-	int limits[2] = { 0, 4500 };
+	int limits[2] = { 1, 4500 };
 	stringstream ss;
 	string tmp1, tmp2;
 	
@@ -144,6 +144,8 @@ int main( int argc, char* argv[] ) {
 				
 				if( tmp1.size() > 0 ) {
 					
+					ss.clear();
+					ss.str("");
 					ss << tmp1;
 					ss >> limits[0];
 					

@@ -51,7 +51,7 @@ TF1* GlobalFitter::GetEffCurve( vector<double> _par ) {
 void GlobalFitter::BinData() {
 	
 	// Data initialisers and filling
-	range.SetRange( Estart, Eend );
+	range.SetRange( (double)Estart, (double)Eend );
 	effi_data.resize( nsources );
 	norm_data.resize( nsources );
 
