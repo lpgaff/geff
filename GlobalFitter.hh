@@ -65,7 +65,6 @@ private:
 	
 	// Binned data
 	ROOT::Fit::DataOptions opt;
-	ROOT::Fit::DataRange range;
 	vector< shared_ptr< ROOT::Fit::BinData > > effi_data;
 	vector< shared_ptr< ROOT::Fit::BinData > > norm_data;
 	int data_size;

@@ -51,13 +51,12 @@ TF1* GlobalFitter::GetEffCurve( vector<double> _par ) {
 void GlobalFitter::BinData() {
 	
 	// Data initialisers and filling
-	range.SetRange( (double)Estart, (double)Eend );
 	effi_data.resize( nsources );
 	norm_data.resize( nsources );
 
 	for ( unsigned int i = 0; i < nsources; i++ ) {
 		
-		effi_data[i] = make_shared< ROOT::Fit::BinData >( opt, range,
+		effi_data[i] = make_shared< ROOT::Fit::BinData >( opt,
 						x[i].size(), 1, ROOT::Fit::BinData::kCoordError );
 		
 		for ( unsigned int j = 0; j < x[i].size(); j++ ) {
@@ -70,7 +69,7 @@ void GlobalFitter::BinData() {
 	
 	for ( unsigned int i = 0; i < nsources; i++ ) {
 		
-		norm_data[i] = make_shared< ROOT::Fit::BinData >( opt, range,
+		norm_data[i] = make_shared< ROOT::Fit::BinData >( opt,
 						norms[i].size(), 1, ROOT::Fit::BinData::kValueError );
 		
 		for ( unsigned int j = 0; j < norms[i].size(); j++ ) {
