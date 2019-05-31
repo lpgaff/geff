@@ -14,22 +14,25 @@ ordering of the sources under -n must match those under -e.
 
 
 Usage: 
-'''
+```
 geff -e <eff1.dat> -n <norm1.dat> ... -e <effX.dat> - n<normX.dat>
-'''
+```
 
 effX.dat is the file containing the energy and efficiency
 values for source number X. The format is 4 columns:
-'''
+```
    Energy (keV) | Error (keV) | Efficiency (arb.) | Error (arb.)
-'''
+```
 
 normX.dat is the file containing experimentally determined
 normalisation constants from arbitrary units to absolute %
 for source number X. The format is 2 columns:
-'''
+```
    Normalisation (%/arb.) | Error (%/arb.)
-'''
-'''
+```
+
+You can also set the fitting and plot range with -r low:upp 
+
+```
 geff --help
-'''
+```
