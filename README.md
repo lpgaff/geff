@@ -15,7 +15,7 @@ ordering of the sources under -n must match those under -e.
 
 Usage: 
 ```
-geff -e <eff1.dat> -n <norm1.dat> ... -e <effX.dat> - n<normX.dat>
+geff -e <eff1.dat> -n <norm1.dat> ... -e <effX.dat> -n <normX.dat> -r <E_low>:<E_upp>
 ```
 
 effX.dat is the file containing the energy and efficiency
