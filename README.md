@@ -31,7 +31,7 @@ for source number X. The format is 2 columns:
    Normalisation (%/arb.) | Error (%/arb.)
 ```
 
-You can also set the fitting and plot range with -r low:upp 
+You can also set the fitting and plot range with -r <low>:<upp> 
 
 ```
 geff --help

@@ -28,7 +28,7 @@ using namespace std;
 void PrintUsage( char* progname ) {
 	
 	cout << "\nUsage: \n" << progname;
-	cout << " -e <eff1.dat> -n <norm1.dat> ... -e <effX.dat> - n<normX.dat>\n";
+	cout << " -e <eff1.dat> -n <norm1.dat> ... -e <effX.dat> -n <normX.dat> -r <E_low>:<E_upp>\n";
 	cout << "\n effX.dat is the file containing the energy and efficiency\n";
 	cout << " values for source number X. The format is 4 columns:\n";
 	cout << "  Energy (keV) | Error (keV) | Efficiency (arb.) | Error (arb.)\n";
@@ -47,8 +47,9 @@ void PrintUsage( char* progname ) {
 	cout << " of normalisation constants, it's sufficient to simply type a\n";
 	cout << " dummy filename, i.e it doesn't have to exist. However, the\n";
 	cout << " ordering of the sources under -n must match those under -e.\n";
+	cout << " \nYou can also set the fitting and plot range with -r <low>:<upp>\n";
 	
-	cout << "\n" << progname << " --help\tfor help!\n\n\n";
+	cout << "\n" << progname << " --help\tfor this detailed help!\n\n\n";
 	
 	return;
 	
@@ -56,19 +57,15 @@ void PrintUsage( char* progname ) {
 
 int main( int argc, char* argv[] ) {
 	
-	// If the number of arguments are wrong, exit with usage
-	if( argc < 2 ) {
-		
-		PrintUsage( argv[0] );
-		return 0;
-		
-	}
-	
 	// Some variables
 	string outputfile = "efficiency.pdf";
 	int limits[2] = { 1, 4500 };
 	stringstream ss;
 	string tmp1, tmp2;
+	
+	// If the number of arguments are wrong, exit with usage
+	bool noargs = false;
+	if( argc < 2 ) noargs = true;
 	
 	// Options parser
 	try {
@@ -84,16 +81,24 @@ int main( int argc, char* argv[] ) {
 		( "o,out", "output filename, filetype taken from extension (pdf, png, svg, eps, root, C, etc)",
 		 cxxopts::value<std::string>(), "<efficiency.pdf>" )
 		( "r,range", "fit range in the format <min>:<max> (keV)",
-		 cxxopts::value<std::string>(), "1:4500" )
-		( "h,help", "Print this help" )
+		 cxxopts::value<std::string>(), "<low>:<upp>" )
+		( "h,help", "Print more detailed help" )
 		;
 		
 		auto optresult = options.parse(argc, argv);
+
+		// If the number of arguments are wrong, exit with usage
+		if( noargs ) {
+			
+			cout << options.help() << endl;
+			return 0;
+			
+		}
 		
 		// Do help
-		if( optresult.count( "help" ) ) {
+		if( optresult.count("h") ) {
 			
-			cout << options.help({""}) << endl;
+			cout << options.help() << endl << endl;
 			PrintUsage( argv[0] );
 			return 0;
 			
