@@ -62,6 +62,7 @@ int main( int argc, char* argv[] ) {
 	int limits[2] = { 1, 4500 };
 	stringstream ss;
 	string tmp1, tmp2;
+	float E0 = 350.;
 	
 	// If the number of arguments are wrong, exit with usage
 	bool noargs = false;
@@ -82,6 +83,8 @@ int main( int argc, char* argv[] ) {
 		 cxxopts::value<std::string>(), "<efficiency.pdf>" )
 		( "r,range", "fit range in the format <min>:<max> (keV)",
 		 cxxopts::value<std::string>(), "<low>:<upp>" )
+		( "z,E0", "the E0 parameter, the energy normalisation from log(E/E0) (keV), default value = 350 keV",
+		 cxxopts::value<float>(), "<E0>" )
 		( "h,help", "Print more detailed help" )
 		;
 		
@@ -169,8 +172,13 @@ int main( int argc, char* argv[] ) {
 		
 		}
 
+		// Check for overiding of E0 parameter
+		if( optresult.count("z") )
+			E0 = optresult["z"].as<float>();
+
+
 		// If we get this far, create the FitEff and GlobalFitter instances
-		GlobalFitter gf( 350., limits[0], limits[1] );
+		GlobalFitter gf( E0, limits[0], limits[1] );
 		FitEff fe( gf, limits[0], limits[1] );
 
 		// Initialise with the number of sources

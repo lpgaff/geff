@@ -186,7 +186,11 @@ ROOT::Fit::FitResult GlobalFitter::GetFitResult() {
 	//fitter.Config().SetMinosErrors( true ); // Perform MINOS error analysis, i.e. correlations to all parameters
 	//fitter.Config().MinimizerOptions().SetMaxIterations(1);
 	//fitter.Config().MinimizerOptions().SetMaxFunctionCalls(1);
-
+	
+	// fix normalisation if no data
+	if( normserr[0][0] / norms[0][0] < 1e-9 )
+		fitter.Config().ParSettings(npars-nsources).Fix();
+		
 
 	// Do fit of global chi2 fucntion
 	fitter.FitFCN( npars, chi2fitter, 0, data_size, true );
