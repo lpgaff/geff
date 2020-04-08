@@ -97,6 +97,9 @@ int FitEff::ReadData() {
 	norms.resize( nsources );
 	normserr.resize( nsources );
 	
+	string line;
+	stringstream line_ss;
+	
 	// Open and read efficiency files
 	for( unsigned int i = 0; i < efiles.size(); i++ ) {
 		
@@ -111,17 +114,25 @@ int FitEff::ReadData() {
 		
 		else cout << "Opened efficiency file: " << efiles[i] << endl;
 		
-		ifile >> a >> b >> c >> d;
+		getline( ifile, line );
 		
 		while( !ifile.eof() ){
 			
-			x[i].push_back( a );
-			xerr[i].push_back( b );
-			y[i].push_back( c );
-			yerr[i].push_back( d );
-			ifile >> a >> b >> c >> d;
+			line_ss.str( line );
 			
+			if( line.substr( 0, 1) != "#" ) {
+				
+				line_ss >> a >> b >> c >> d;
+				
+				x[i].push_back( a );
+				xerr[i].push_back( b );
+				y[i].push_back( c );
+				yerr[i].push_back( d );
+				
+			}
 			
+			getline( ifile, line );
+
 		}
 		
 		ifile.close();

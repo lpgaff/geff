@@ -54,3 +54,4 @@ DEPENDENCIES = GlobalFitter.hh \
 	rm -f $@ *_dict$(DICTEXT)
 	$(ROOTDICT) -f $@ -c $(INCLUDES) $(DEPENDENCIES)
 	cp $*_dict$(DICTEXT) $(LIBDIR)/
+	cp $*_dict$(DICTEXT) $(BINDIR)/
