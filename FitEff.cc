@@ -114,25 +114,24 @@ int FitEff::ReadData() {
 		
 		else cout << "Opened efficiency file: " << efiles[i] << endl;
 		
-		getline( ifile, line );
-		
-		while( !ifile.eof() ){
-			
-			line_ss.str( line );
-			
-			if( line.substr( 0, 1) != "#" ) {
+		while( getline( ifile, line ) ){
+
+			line_ss.str("");
+			line_ss.clear();
+			line_ss << line;
+			if( line.substr( 0, 1 ) != "#" ) {
 				
-				line_ss >> a >> b >> c >> d;
-				
-				x[i].push_back( a );
-				xerr[i].push_back( b );
-				y[i].push_back( c );
-				yerr[i].push_back( d );
-				
+				if( line_ss >> a >> b >> c >> d ) {
+
+					x[i].push_back( a );
+					xerr[i].push_back( b );
+					y[i].push_back( c );
+					yerr[i].push_back( d );
+					
+				}
+
 			}
 			
-			getline( ifile, line );
-
 		}
 		
 		ifile.close();
@@ -153,13 +152,21 @@ int FitEff::ReadData() {
 		
 		else cout << "Opened normalisation file: " << nfiles[i] << endl;
 		
-		ifile >> a >> b;
-		
-		while( !ifile.eof() ){
+		while( getline( ifile, line ) ){
 			
-			norms[i].push_back( a );
-			normserr[i].push_back( b );
-			ifile >> a >> b;
+			line_ss.str("");
+			line_ss.clear();
+			line_ss << line;
+			if( line.substr( 0, 1 ) != "#" ) {
+				
+				if( line_ss >> a >> b ) {
+			
+					norms[i].push_back( a );
+					normserr[i].push_back( b );
+					
+				}
+				
+			}
 			
 		}
 		
