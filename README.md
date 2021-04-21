@@ -1,5 +1,7 @@
 # geff
 
+[![DOI](https://zenodo.org/badge/159710132.svg)](https://zenodo.org/badge/latestdoi/159710132)
+
 The efficiency curve is determined by a simultaneous fit to all
 experimental data. In the case that no normalisation data are
 given at all, then it is assumed to be equal to 1 for the first
