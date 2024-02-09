@@ -40,11 +40,11 @@ void FitEff::SetVariables( unsigned int n ) {
 	
 	// Set starting parameters
 	// default 5th order polynomial
-	effpar.push_back( 2.75 );	// a
-	effpar.push_back( -0.7 );	// b
-	effpar.push_back( -0.04 );	// c
-	effpar.push_back( 0.11 );	// d
-	effpar.push_back( -0.04 );	// e
+	effpar.push_back( -1.84 );	// a
+	effpar.push_back( -0.52 );	// b
+	effpar.push_back( -0.01 );	// c
+	effpar.push_back(  0.06 );	// d
+	effpar.push_back( -0.06 );	// e
 	
 	// Check size of parameters etc
 	npoly = effpar.size();
@@ -255,7 +255,8 @@ void FitEff::DrawResults( string outputfile ) {
 		eff = fEff->Eval( i ) * fitres.Value(npoly);
 		err = fErr->Eval( i ) * fitres.Value(npoly);
 		
-		if( ( i % 100 == 0 && i < 800 ) || ( i % 500 == 0 && i >= 500 ) )
+		if( ( i % 100 == 0 && i < 800 ) || ( i % 500 == 0 && i >= 500 )
+		    || i == 1332 || i == 50 )
 			cout << i << "\t" << eff << "\t" << err << endl;
 		
 		gFinal->SetPoint( i-fEff->GetXmin(), i, eff );
@@ -326,7 +327,7 @@ void FitEff::DrawResults( string outputfile ) {
 
 	// Labels etc
 	mg->GetXaxis()->SetTitle("Energy (keV)");
-	mg->GetYaxis()->SetTitle("Efficiency (%)");
+	mg->GetYaxis()->SetTitle("Efficiency");
 	mg->GetXaxis()->SetTickLength(0.015);
 	mg->GetYaxis()->SetTickLength(0.015);
 	mg->GetXaxis()->SetTitleSize(0.045);
